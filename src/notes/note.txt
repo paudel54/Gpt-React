@@ -11,3 +11,36 @@ npm install @reduxjs/toolkit react-redux
 
 
 #note: create env files on root of folder or npm packge for more. 
+
+
+//Application of local Storage for ease data retriving or storing state even page reload or tab closed. 
+
+GETTING under useEffect Section :::
+  useEffect(() => {
+    // Getting data from local Storage on Page Load.
+    const articlesFromLocalStorage = JSON.parse(
+      localStorage.getItem("articles")
+    );
+    // if anything informatin stored on location storage
+    if (articlesFromLocalStorage) {
+      setAllArticles(articlesFromLocalStorage);
+    }
+  }, []);
+
+// Setting from 
+// making API request
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    // alert("Clicked button for API call");
+    const { data } = await getSummary({ articleUrl: article.url });
+    if (data?.summary) {
+      const newArticle = { ...article, summary: data.summary };
+      setArticle(newArticle);
+      // This allArticles will stores entire state value into an array
+      const updatedAllArticles = [newArticle, ...allArticles];
+      setAllArticles(updatedAllArticles);
+      console.log(newArticle);
+      console.log(updatedAllArticles);
+      localStorage.setItem("articles", JSON.stringify(updatedAllArticles));
+    }
+  };
