@@ -1,0 +1,13 @@
+Setting UP redux toolkit Query
+1. install 
+npm install @reduxjs/toolkit react-redux
+
+2.wrap <App/> component inside main.jsx  reactDOM.render with Provider. 
+<Provider> 
+<App/>
+</Provider> 
+
+3.Create a global state: or store and pass onto provider . 
+
+
+#note: create env files on root of folder or npm packge for more. 
