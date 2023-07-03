@@ -10,6 +10,8 @@ const Demo = () => {
   const [allArticles, setAllArticles] = useState([]);
   // for lazyfunction , 1st parameter is fn and 2nd an object
   const [getSummary, { error, isFetching }] = useLazyGetSummaryQuery();
+  // cilip
+  const [copied, setCopied] = useState("");
 
   useEffect(() => {
     // Getting data from local Storage on Page Load.
@@ -37,6 +39,13 @@ const Demo = () => {
       console.log(updatedAllArticles);
       localStorage.setItem("articles", JSON.stringify(updatedAllArticles));
     }
+  };
+  // add to clipboard use case
+  const handleCopy = (copyUrl) => {
+    setCopied(copyUrl);
+    // built in method
+    navigator.clipboard.writeText(copyUrl);
+    setTimeout(() => setCopied(false), 3000);
   };
 
   return (
@@ -77,11 +86,11 @@ const Demo = () => {
               }}
               className="link_card"
             >
-              <div className="copy_btn">
+              <div className="copy_btn" onClick={() => handleCopy(item.url)}>
                 <img
-                  src={copy}
+                  src={copied === item.url ? tick : copy}
                   alt="copy_icon"
-                  className="w-[40%] h-[40%] object-contain"
+                  className="w-[1rem] h-[40%] object-contain"
                 />
               </div>
               <p className="flex-1 font-satoshi text-blue-700 font-medium text-sm truncate">
